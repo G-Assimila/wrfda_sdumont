@@ -61,7 +61,7 @@ start_day=DIAINI,
 start_hour=12,
 end_year=ANO,
 end_month=MES,
-end_day=DIAFIM,
+end_day=DIAINI,
 end_hour=12,
 /
 &fdda
