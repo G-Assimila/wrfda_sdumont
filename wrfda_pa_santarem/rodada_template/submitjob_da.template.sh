@@ -37,12 +37,17 @@ gzip rsl.*
 
 cd $OBSPROC_DIR
 srun -n 1 \
-cat /scratch/g-assimila/data/datain/rda.ucar.edu/ds351/little_r/ANO/OBS:ANOMESDIAINI12 \
-    /scratch/g-assimila/data/datain/rda.ucar.edu/ds461/little_r/ANO/SURFACE_OBS:ANOMESDIAINI12 \
+cat \
+ /scratch/g-assimila/data/datain/rda.ucar.edu/ds351/little_r/ANO/OBS:ANOMESDIAINI06 \
+ /scratch/g-assimila/data/datain/rda.ucar.edu/ds351/little_r/ANO/OBS:ANOMESDIAINI12 \
+ /scratch/g-assimila/data/datain/rda.ucar.edu/ds351/little_r/ANO/OBS:ANOMESDIAINI18 \
+ /scratch/g-assimila/data/datain/rda.ucar.edu/ds461/little_r/ANO/SURFACE_OBS:ANOMESDIAINI06 \
+ /scratch/g-assimila/data/datain/rda.ucar.edu/ds461/little_r/ANO/SURFACE_OBS:ANOMESDIAINI12 \
+ /scratch/g-assimila/data/datain/rda.ucar.edu/ds461/little_r/ANO/SURFACE_OBS:ANOMESDIAINI18 \
  >  ./OBS_ANOMESDIAINI12
 srun -n 1 ./obsproc.exe
 
 cd $WRFDA_DIR
 srun -n $SLURM_NTASKS ./da_wrfvar.exe
 
-rm $OBSPROC_DIR/OBS_ANOMESDIAINI12 
+rm $OBSPROC_DIR/OBS_ANOMESDIAINI12
