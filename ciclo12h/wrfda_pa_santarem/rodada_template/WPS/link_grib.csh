@@ -1,0 +1,1 @@
+/scratch/g-assimila/sdbase/wrf-model/v4.2/WPS/link_grib.csh
