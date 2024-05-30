@@ -41,18 +41,18 @@ for (( mes=6;mes<=8;mes++ )); do
        dir=./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}/rodada/OBSPROC/run
        if [ -d ${dir} ]; then
           echo "${dir}"
-          sed 's/ANO/'${ano}'/g' ${dir}/namelist.obsproc.template | sed 's/MES/'${mesprevnum[${mes}]}'/g' | sed 's/DIAINI/'${diaprev[${dia}]}'/g'  > ${dir}/namelist.obsproc
-          sed 's/ANO/'${ano}'/g' ./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}/rodada/submitjob_da.template.sh | sed 's/MES/'${mesprevnum[${mes}]}'/g' | sed 's/DIAINI/'${diaprev[${dia}]}'/g'  > ./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}/rodada/submitjob_da.sh
-#          cat  /scratch/g-assimila/data/datain/rda.ucar.edu/ds351/little_r/${ano}/OBS:${ano}${mesprevnum[${mes}]}${diaprev[${dia}]}12 \
-#               /scratch/g-assimila/data/datain/rda.ucar.edu/ds461/little_r/${ano}/SURFACE_OBS:${ano}${mesprevnum[${mes}]}${diaprev[${dia}]}12 \
-#            >  /scratch/g-assimila/data/datain/rda.ucar.edu/rda/little_r/${ano}/OBS_${ano}${mesprevnum[${mes}]}${diaprev[${dia}]}12
-#          ln  -sf /scratch/g-assimila/data/datain/rda.ucar.edu/rda/little_r/${ano}/OBS_${ano}${mesprevnum[${mes}]}${diaprev[${dia}]}12 ${dir}/OBS_${ano}${mesprevnum[${mes}]}${diaprev[${dia}]}12
+          #date -d '2018-11-01 00:00 -1 hour' +'%Y-%m-%d_%H:%M:%S' 
+          diamin=`echo $(date -d "${ano}-${mesprevnum[${mes}]}-${diaprev[${dia}]} -6 hour" +"%Y-%m-%d_%H:%M:%S")`
+          sed 's/ANO/'${ano}'/g' ${dir}/namelist.obsproc.template | sed 's/MES/'${mesprevnum[${mes}]}'/g' | sed 's/DIAINI/'${diaprev[${dia}]}'/g' | sed 's/DIAMIN/'${diamin}'/g' > ${dir}/namelist.obsproc
+          diamin=`echo $(date -d "${ano}-${mesprevnum[${mes}]}-${diaprev[${dia}]} -6 hour" +"%Y%m%d%H")`
+          sed 's/ANO/'${ano}'/g' ./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}/rodada/submitjob_da.template.sh | sed 's/MES/'${mesprevnum[${mes}]}'/g' | sed 's/DIAINI/'${diaprev[${dia}]}'/g' | sed 's/DIAMIN/'${diamin}'/g' > ./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}/rodada/submitjob_da.sh
        fi
        dir=./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}/rodada/WRFDA/run
        if [ -d ${dir} ]; then
           echo "${dir}"
-          sed 's/ANO/'${ano}'/g' ${dir}/namelist.input.template | sed 's/MES/'${mesprevnum[${mes}]}'/g' | sed 's/DIAINI/'${diaprev[${dia}]}'/g' | sed 's/DIAFIM/'${diaprev[$((${dia}+1))]}'/g'  > ${dir}/namelist.input
-          ln -sf  ../../OBSPROC/run/obs_gts_${ano}-${mesprevnum[${mes}]}-${diaprev[${dia}]}_12\:00\:00.3DVAR ${dir}/ob.ascii
+          diamin=`echo $(date -d "${ano}-${mesprevnum[${mes}]}-${diaprev[${dia}]} -6 hour" +"%Y-%m-%d_%H:%M:%S.0000")`
+          sed 's/ANO/'${ano}'/g' ${dir}/namelist.input.template | sed 's/MES/'${mesprevnum[${mes}]}'/g' | sed 's/DIAINI/'${diaprev[${dia}]}'/g' | sed 's/DIAFIM/'${diaprev[$((${dia}+1))]}'/g' | sed 's/DIAMIN/'${diamin}'/g'  > ${dir}/namelist.input
+          ln -sf  ../../OBSPROC/run/obs_gts_${ano}-${mesprevnum[${mes}]}-${diaprev[${dia}]}_00\:00\:00.3DVAR ${dir}/ob.ascii
        fi
    done
 done

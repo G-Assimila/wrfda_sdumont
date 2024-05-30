@@ -31,9 +31,9 @@ for (( mes=6;mes<=8;mes++ )); do
        dir=${DIRROOT}/${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}/rodada/WPS
        if [ -d ${dir} ]; then
           cd ${dir}
-          echo "./link_grib.csh ./${ano}/${mesprevnum[${mes}]}${diaprev[${dia}]}12/"
+          echo "./link_grib.csh ./${ano}/${mesprevnum[${mes}]}${diaprev[${dia}]}00/"
           ln -s /scratch/g-assimila/data/datain/gfs/dominio/pa/${ano}
-          ./link_grib.csh ./${ano}/${mesprevnum[${mes}]}${diaprev[${dia}]}12/
+          ./link_grib.csh ./${ano}/${mesprevnum[${mes}]}${diaprev[${dia}]}00/
        fi
    done
 done

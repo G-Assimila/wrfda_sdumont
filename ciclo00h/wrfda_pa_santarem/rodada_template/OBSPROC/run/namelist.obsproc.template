@@ -1,13 +1,13 @@
 &record1
- obs_gts_filename = 'OBS_ANOMESDIAINI12',
+ obs_gts_filename = 'OBS_ANOMESDIAINI00',
  obs_err_filename = 'obserr.txt',
  gts_from_mmm_archive = .true.,
 /
 
 &record2
- time_window_min  = 'ANO-MES-DIAINI_06:00:00',
- time_analysis    = 'ANO-MES-DIAINI_12:00:00',
- time_window_max  = 'ANO-MES-DIAINI_18:00:00',
+ time_window_min  = 'DIAMIN',
+ time_analysis    = 'ANO-MES-DIAINI_00:00:00',
+ time_window_max  = 'ANO-MES-DIAINI_06:00:00',
 /
 
 &record3
