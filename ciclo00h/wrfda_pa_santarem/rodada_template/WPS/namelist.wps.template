@@ -1,8 +1,8 @@
 &share
  wrf_core = 'ARW',
  max_dom = 1,
- start_date = 'ANO-MES-DIAINI_12:00:00', '2018-09_22_00:00:00', '2018-09-22_00:00:00', 
- end_date   = 'ANO-MES-DIAFIM_12:00:00', '2018-09-23_00:00:00', '2018-09-23_00:00:00', 
+ start_date = 'ANO-MES-DIAINI_00:00:00', '2018-09_22_00:00:00', '2018-09-22_00:00:00', 
+ end_date   = 'ANO-MES-DIAFIM_00:00:00', '2018-09-23_00:00:00', '2018-09-23_00:00:00', 
  interval_seconds = 10800,
  io_form_geogrid = 2,
  debug_level = 0,

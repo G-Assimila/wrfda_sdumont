@@ -6,13 +6,13 @@
  start_year                          = ANO,
  start_month                         = MES,
  start_day                           = DIAINI,
- start_hour                          = 12
+ start_hour                          = 00
  start_minute                        = 00,
  start_second                        = 00,
  end_year                            = ANO,
  end_month                           = MES, 
  end_day                             = DIAFIM,
- end_hour                            = 12,
+ end_hour                            = 00,
  end_minute                          = 00,
  end_second                          = 00,
  interval_seconds                    = 10800 
