@@ -19,11 +19,11 @@
  dx = 9000,
  dy = 9000,
  map_proj =  'mercator',
- ref_lat   =  -2.43,
- ref_lon   =  -54.72,
- truelat1  =  -5.0,
- truelat2  =  -10.0,
- stand_lon = -54.72,
+ ref_lat   =  -2.429,
+ ref_lon   =  -54.799,
+ truelat1  =  -2.429,
+ truelat2  =  -2.429,
+ stand_lon = -54.799,
  geog_data_path = '/scratch/g-assimila/data/datain/WPS_GEOG',
 /
 
