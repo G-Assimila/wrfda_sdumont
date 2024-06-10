@@ -20,9 +20,9 @@ export WRFDA_DIR=$SLURM_SUBMIT_DIR/WRFDA/run
 export OBSPROC_DIR=$SLURM_SUBMIT_DIR/OBSPROC/run
 
 cd $WPS_DIR
-./geogrid.exe
-./ungrib.exe
-./metgrid.exe
+srun -n 1 ./geogrid.exe
+srun -n 1 ./ungrib.exe
+srun -n 1 ./metgrid.exe
 #rm GRIBFILE* && rm FILE*
 
 export OMPI_MCA_opal_warn_on_missing_libcuda=0
@@ -49,6 +49,6 @@ cat \
 srun -n 1 ./obsproc.exe
 
 cd $WRFDA_DIR
-srun -n $SLURM_NTASKS ./da_wrfvar.exe
+srun -n 1 ./da_wrfvar.exe
 
 rm $OBSPROC_DIR/OBS_ANOMESDIAINI00

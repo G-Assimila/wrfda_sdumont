@@ -2,4 +2,4 @@
 
 jobid=${1}
 
-sacct -j ${jobid} --format="elapsed"
+sacct -j ${jobid} --format="JobID, JobName, Elapsed, Partition, Account, AllocCPUS, State, ExitCode" 
