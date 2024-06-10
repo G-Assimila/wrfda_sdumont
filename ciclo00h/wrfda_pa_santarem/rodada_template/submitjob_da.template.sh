@@ -31,7 +31,7 @@ export OMPI_MCA_mpi_cuda_support=0
 cd $WRF_DIR
 ln -s $WPS_DIR/met_em* .
 srun -n 1 ./real.exe 
-srun -n $SLURM_NTASKS ./wrf.exe 
+#srun -n $SLURM_NTASKS ./wrf.exe 
 #rm met_em*
 gzip rsl.*
 
