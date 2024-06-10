@@ -394,7 +394,10 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
   - na pasta `WRFDA/run`
 
     ```
-    
+    namelist.output.da
+    qcstat_conv_01
+    statistics
+    wrfvar_output
     ```
 
     
@@ -414,13 +417,16 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
 - A fim de verificar o tempo de execução do job, rodar o script **verificatempojob.sh**, tendo como parâmetro o ID do job
 
   ```bash
-  $ ./verificatempojob.sh 10893601
+  $ ./verificatempojob.sh 11100698
      Elapsed
   ----------
-    00:08:16
-    00:08:16
+    00:10:37
+    00:10:37
+    00:00:11
+    00:05:12
+    00:01:11
+    00:02:46
     00:00:05
-    00:06:52
   ```
 
   ***verificatempojob.sh***
@@ -438,11 +444,14 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
 - Para um pouco mais de detalhes sobre a execução
 
   ```bash
-  $ sacct -j 10893601
+  $ sacct -j 11100698
          JobID    JobName  Partition    Account  AllocCPUS      State ExitCode
   ------------ ---------- ---------- ---------- ---------- ---------- --------
-  10893601            WRF    cpu_dev g-assimila          1  COMPLETED      0:0
-  10893601.ba+      batch            g-assimila          1  COMPLETED      0:0
-  10893601.0     real.exe            g-assimila          1  COMPLETED      0:0
-  10893601.1      wrf.exe            g-assimila          1  COMPLETED      0:0
+  11100698            WRF    cpu_dev g-assimila         24  COMPLETED      0:0
+  11100698.ba+      batch            g-assimila         24  COMPLETED      0:0
+  11100698.0     real.exe            g-assimila         24  COMPLETED      0:0
+  11100698.1      wrf.exe            g-assimila         24  COMPLETED      0:0
+  11100698.2          cat            g-assimila         24  COMPLETED      0:0
+  11100698.3   obsproc.e+            g-assimila         24  COMPLETED      0:0
+  11100698.4   da_wrfvar+            g-assimila         24  COMPLETED      0:0
   ```
