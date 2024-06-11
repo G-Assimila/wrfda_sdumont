@@ -29,7 +29,13 @@ export OMPI_MCA_opal_warn_on_missing_libcuda=0
 export OMPI_MCA_mpi_cuda_support=0
 
 cd $WRF_DIR
-ln -s $WPS_DIR/met_em* .
+ln -sf $WPS_DIR/met_em* .
+
+# Checa os niveis o numero de niveis dos arquivos met_em*
+fmet_em=`ls -1 ${WPS_DIR}/met_em.* |head -1`
+nmet_em_lev=`ncdump -h $(ls -1 ${WPS_DIR}/met_em.* |head -1) | grep BOTTOM-TOP_GRID_DIMENSION |awk '{print $3}'`
+sed -i "s/num_metgrid_levels                  = NUMGRIDLEVELS/num_metgrid_levels                  = ${nmet_em_lev}/" ${WRF_DIR}/namelist.input
+
 srun -n 1 ./real.exe 
 #srun -n $SLURM_NTASKS ./wrf.exe 
 #rm met_em*
