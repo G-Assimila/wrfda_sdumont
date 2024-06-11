@@ -317,18 +317,24 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
   export OBSPROC_DIR=$SLURM_SUBMIT_DIR/OBSPROC/run
   
   cd $WPS_DIR
-  ./geogrid.exe
-  ./ungrib.exe
-  ./metgrid.exe
+  srun -n 1 ./geogrid.exe
+  srun -n 1 ./ungrib.exe
+  srun -n 1 ./metgrid.exe
   #rm GRIBFILE* && rm FILE*
   
   export OMPI_MCA_opal_warn_on_missing_libcuda=0
   export OMPI_MCA_mpi_cuda_support=0
   
   cd $WRF_DIR
-  ln -s $WPS_DIR/met_em* .
+  ln -sf $WPS_DIR/met_em* .
+  
+  # Checa os niveis o numero de niveis dos arquivos met_em*
+  fmet_em=`ls -1 ${WPS_DIR}/met_em.* |head -1`
+  nmet_em_lev=`ncdump -h $(ls -1 ${WPS_DIR}/met_em.* |head -1) | grep BOTTOM-TOP_GRID_DIMENSION |awk '{print $3}'`
+  sed -i "s/num_metgrid_levels                  = NUMGRIDLEVELS/num_metgrid_levels                  = ${nmet_em_lev}/" ${WRF_DIR}/namelist.input
+  
   srun -n 1 ./real.exe
-  srun -n $SLURM_NTASKS ./wrf.exe
+  #srun -n $SLURM_NTASKS ./wrf.exe
   #rm met_em*
   gzip rsl.*
   
@@ -346,7 +352,7 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
   srun -n 1 ./obsproc.exe
   
   cd $WRFDA_DIR
-  srun -n $SLURM_NTASKS ./da_wrfvar.exe
+  srun -n 1 ./da_wrfvar.exe
   
   rm $OBSPROC_DIR/OBS_2016060100
   ```
@@ -373,60 +379,45 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
 
 - Ao final da execução do job, os seguintes arquivos devem ter sido gerados:
 
-  - na pasta `WRF/run/ `:
+  - na pasta `WRF/run/ ` (é realizada somente a execução de `./real`, o `./wrf.exe` não é executado:
 
     ```bash
     wrfbdy_d01
     wrfinput_d01
-    wrfout_d01_2016-06-01_00:00:00
-    wrfout_d01_2016-06-01_12:00:00
-    wrfout_d01_2016-06-02_00:00:00
-    wrfout_d01_2016-06-02_12:00:00
-    wrfout_d01_2016-06-03_00:00:00
     ```
-
+    
   - na pasta `OBSPROC/run`
-
+  
     ```bash
-    obs_duplicate_time.diag_2016-06-01_00:00:00
+    obs_gts_2016-06-01_00:00:00.3DVAR
     ```
-
+  
   - na pasta `WRFDA/run`
-
+  
     ```
     namelist.output.da
     qcstat_conv_01
     statistics
     wrfvar_output
     ```
-
-    
-
-  ```bash
-  wrfbdy_d01
-  wrfinput_d01
-  wrfout_d01_2016-06-01_00:00:00
-  wrfout_d01_2016-06-01_12:00:00
-  wrfout_d01_2016-06-02_00:00:00
-  wrfout_d01_2016-06-02_12:00:00
-  wrfout_d01_2016-06-03_00:00:00
-  ```
-
-- A saída em tela da execução é armazenada em um arquivo com nome similar a **slurm-10893601.out**, onde a numeração refere-se ao ID do job.
+  
+- A saída em tela da execução é armazenada em um arquivo com nome similar a **slurm-11107751.out**, onde a numeração refere-se ao ID do job.
 
 - A fim de verificar o tempo de execução do job, rodar o script **verificatempojob.sh**, tendo como parâmetro o ID do job
 
   ```bash
-  $ ./verificatempojob.sh 11100698
-     Elapsed
-  ----------
-    00:10:37
-    00:10:37
-    00:00:11
-    00:05:12
-    00:01:11
-    00:02:46
-    00:00:05
+  $ ./verificatempojob.sh 11107751
+         JobID    JobName    Elapsed  Partition    Account  AllocCPUS      State ExitCode
+  ------------ ---------- ---------- ---------- ---------- ---------- ---------- --------
+  11107751            WRF   00:04:52    cpu_dev g-assimila         24  COMPLETED      0:0
+  11107751.ba+      batch   00:04:52            g-assimila         24  COMPLETED      0:0
+  11107751.0   geogrid.e+   00:00:08            g-assimila         24  COMPLETED      0:0
+  11107751.1   ungrib.exe   00:00:04            g-assimila         24  COMPLETED      0:0
+  11107751.2   metgrid.e+   00:00:14            g-assimila         24  COMPLETED      0:0
+  11107751.3     real.exe   00:00:09            g-assimila         24  COMPLETED      0:0
+  11107751.4          cat   00:01:07            g-assimila         24  COMPLETED      0:0
+  11107751.5   obsproc.e+   00:02:47            g-assimila         24  COMPLETED      0:0
+  11107751.6   da_wrfvar+   00:00:11            g-assimila         24  COMPLETED      0:0
   ```
 
   ***verificatempojob.sh***
@@ -436,22 +427,5 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
   
   jobid=${1}
   
-  sacct -j ${jobid} --format="elapsed"
-  ```
-
-- O tempo de execução é dado em *hora:minutos:seguntos*
-
-- Para um pouco mais de detalhes sobre a execução
-
-  ```bash
-  $ sacct -j 11100698
-         JobID    JobName  Partition    Account  AllocCPUS      State ExitCode
-  ------------ ---------- ---------- ---------- ---------- ---------- --------
-  11100698            WRF    cpu_dev g-assimila         24  COMPLETED      0:0
-  11100698.ba+      batch            g-assimila         24  COMPLETED      0:0
-  11100698.0     real.exe            g-assimila         24  COMPLETED      0:0
-  11100698.1      wrf.exe            g-assimila         24  COMPLETED      0:0
-  11100698.2          cat            g-assimila         24  COMPLETED      0:0
-  11100698.3   obsproc.e+            g-assimila         24  COMPLETED      0:0
-  11100698.4   da_wrfvar+            g-assimila         24  COMPLETED      0:0
-  ```
+  sacct -j ${jobid} --format="JobID, JobName, Elapsed, Partition, Account, AllocCPUS, State, ExitCode"
+  ```  
