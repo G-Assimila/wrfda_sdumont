@@ -32,10 +32,10 @@ Os dados de condição de contorno são armazenadoS no seguinte diretório:
 /scratch/g-assimila/data/datain/gfs/dominio/
 ```
 
-Por exemplo, os dados de uma região no estado do Pará, no período compreendendo os meses de junho a agosto, de 2018:
+Por exemplo, os dados de uma região no estado do Pará, no período compreendendo os meses de junho a agosto, de 2016:
 
 ```bash
-/scratch/g-assimila/data/datain/gfs/dominio/pa/2018
+/scratch/g-assimila/data/datain/gfs/dominio/pa/2016
 ```
 
 ## Rodar o estudo de caso para domínio com centro em Santarém-PA
@@ -428,4 +428,4 @@ Por exemplo, os dados de uma região no estado do Pará, no período compreenden
   jobid=${1}
   
   sacct -j ${jobid} --format="JobID, JobName, Elapsed, Partition, Account, AllocCPUS, State, ExitCode"
-  ```  
+  ```
