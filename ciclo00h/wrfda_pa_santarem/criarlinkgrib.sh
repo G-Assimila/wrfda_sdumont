@@ -32,7 +32,7 @@ for (( mes=6;mes<=8;mes++ )); do
        if [ -d ${dir} ]; then
           cd ${dir}
           echo "./link_grib.csh ./${ano}/${mesprevnum[${mes}]}${diaprev[${dia}]}00/"
-          ln -s /scratch/g-assimila/data/datain/gfs/dominio/pa/${ano}
+          ln -sf /scratch/g-assimila/data/datain/gfs/dominio/pa/${ano}
           ./link_grib.csh ./${ano}/${mesprevnum[${mes}]}${diaprev[${dia}]}00/
        fi
    done
