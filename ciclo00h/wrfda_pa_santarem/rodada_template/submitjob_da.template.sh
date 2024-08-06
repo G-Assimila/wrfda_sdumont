@@ -37,7 +37,7 @@ nmet_em_lev=`ncdump -h $(ls -1 ${WPS_DIR}/met_em.* |head -1) | grep BOTTOM-TOP_G
 sed -i "s/num_metgrid_levels                  = NUMGRIDLEVELS/num_metgrid_levels                  = ${nmet_em_lev}/" ${WRF_DIR}/namelist.input
 
 srun -n 1 ./real.exe 
-#srun -n $SLURM_NTASKS ./wrf.exe 
+srun -n $SLURM_NTASKS ./wrf.exe 
 #rm met_em*
 gzip rsl.*
 

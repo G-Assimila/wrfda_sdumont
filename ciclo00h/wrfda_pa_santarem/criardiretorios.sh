@@ -27,9 +27,9 @@ diaprev=('00' '01' '02' '03' '04' '05' '06' '07' '08' '09' '10' '11' '12' '13' '
 for (( mes=1;mes<=12;mes++ )); do
     for (( dia=1;dia<=DD[${mes}];dia++ )); do
        periododir=./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}
-       if [ -d ${periododir} ]; then
-          rm -fr ${periododir}
-       fi
+       #if [ -d ${periododir} ]; then
+       #   rm -fr ${periododir}
+       #fi
        echo ${periododir} 
        mkdir -p ${periododir} 
    done
