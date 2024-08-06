@@ -30,7 +30,8 @@ for (( mes=1;mes<=12;mes++ )); do
        periododir=./${ano}/${mesprev[${mes}]}/${diaprev[${dia}]}
        if [ -d ${periododir} ]; then
           echo ${periododir}
-          cp -r ./rodada_template ${periododir}/rodada
+          rsync -avl ./rodada_template/ ${periododir}/rodada/
+          #cp -r ./rodada_template ${periododir}/rodada
        fi
    done
 done
