@@ -6,4 +6,4 @@ ano=${1}
 ./criarrodadas.sh ${ano}
 ./criarnamelist.sh ${ano}
 ./criarlinkgrib.sh ${ano}
-
+./criarlinkgenbe.sh ${ano}

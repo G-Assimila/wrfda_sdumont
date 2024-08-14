@@ -17,7 +17,7 @@ ntmax=100,
 orthonorm_gradient=true,
 /
 &wrfvar7
-cv_options=3,
+cv_options=5,
 /
 &wrfvar8
 /
@@ -67,9 +67,9 @@ end_hour=12,
 &fdda
 /
 &domains
-e_we=96,
-e_sn=96,
-e_vert=50,
+e_we=276,
+e_sn=214,
+e_vert=45,
 dx=9000,
 dy=9000,
 /

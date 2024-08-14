@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --nodes=1                      #Numero de Nós
-#SBATCH --ntasks=24                    #Numero total de tarefas MPI
+#SBATCH --nodes=4                      #Numero de Nós
+#SBATCH --ntasks=96                    #Numero total de tarefas MPI
 #SBATCH -p cpu_dev                     #Fila (partition) a ser utilizada
 #SBATCH -J WRF       #Nome job
 
