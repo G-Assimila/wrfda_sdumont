@@ -18,6 +18,7 @@ export WPS_DIR=$SLURM_SUBMIT_DIR/WPS
 export WRF_DIR=$SLURM_SUBMIT_DIR/WRF/run
 export WRFDA_DIR=$SLURM_SUBMIT_DIR/WRFDA/run
 export OBSPROC_DIR=$SLURM_SUBMIT_DIR/OBSPROC/run
+export UPDATE_DIR=$SLURM_SUBMIT_DIR/UPDATE3DVAR
 
 cd $WPS_DIR
 srun -n 1 ./geogrid.exe
@@ -56,5 +57,9 @@ srun -n 1 ./obsproc.exe
 
 cd $WRFDA_DIR
 srun -n 1 ./da_wrfvar.exe
+
+cd $UPDATE_DIR
+cp -p ../WRF/run/wrfbdy_d01 .
+srun -n 1 ./da_update_bc.exe
 
 rm $OBSPROC_DIR/OBS_ANOMESDIAINI00
