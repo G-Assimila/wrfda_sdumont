@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH --nodes=1                      #Numero de Nós
+#SBATCH --ntasks=24                    #Numero total de tarefas MPI
+#SBATCH -p cpu_shared                     #Fila (partition) a ser utilizada
+#SBATCH -J wgrib2       #Nome job
+#SBATCH --time=06:00:00
+
+module load cmake/3.17.3
+module load python/3.8.2
+. /scratch/g-assimila/sdbase/spack/v0.17.1/share/spack/setup-env.sh
+export SPACK_USER_CONFIG_PATH=/scratch/g-assimila/sdbase/spack/.config/v0.17.1
+
+spack load wgrib2@2.0.8-cmake-v6
+
+year=${1}
+
+dirIN=/scratch/g-assimila/data/datain/rda.ucar.edu/ds084.1/ciclo00/${year}
+dirOUT=/scratch/g-assimila/data/datain/gfs/dominio/pa/${year}new
+mkdir ${dirOUT}
+
+dirWORK=$PWD
+cd ${dirIN}
+ls -A1 *.grib2 > ${dirWORK}/files.txt
+cd ${dirWORK}
+
+for j in $(cat files.txt);do
+    #wgrib2 gfs.0p25.2016062200.f000.grib2 -small_grib -60:-50 -7:2 gfs.0p25.2016062200.f000.new2.grib2
+    echo "wgrib2 ${dirIN}/${j} -small_grib -68:-42 -12:8 ${dirOUT}/${j}"
+    wgrib2 ${dirIN}/${j} -small_grib -68:-42 -12:8 ${dirOUT}/${j}
+done
+
